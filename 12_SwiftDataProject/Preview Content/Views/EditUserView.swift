@@ -13,11 +13,11 @@ struct EditUserView: View {
     var jobs = Job.sampleData
     
     @Bindable var user: User
-    @State private var selectedJobIDs: Set<UUID>
+    @State private var selectedJobs: Set<Job>
     
     init(user: User) {
         _user = Bindable(user)
-        _selectedJobIDs = State(initialValue: Set(user.jobs.map { $0.id }))
+        _selectedJobs = State(initialValue: Set(user.jobs))
     }
     
     var body: some View {
@@ -31,24 +31,23 @@ struct EditUserView: View {
                     HStack {
                         Text(job.name)
                         Spacer()
-                        if selectedJobIDs.contains(job.id) {
+                        if selectedJobs.map(\.id).contains(job.id) {
                             Image(systemName: "checkmark")  /// Display check mark @ row if selected
                         }
                     }
                     .contentShape(Rectangle()) // Extend tap area
                     .onTapGesture {
-                        if selectedJobIDs.contains(job.id) { /// Toggle State if row was tapped
-                            selectedJobIDs.remove(job.id)
+                        if selectedJobs.contains(job) { 
+                            selectedJobs.remove(job)
                         } else {
-                            selectedJobIDs.insert(job.id)
+                            selectedJobs.insert(job)
                         }
-                        /// updata user's jobs
-                        user.jobs = jobs.filter { selectedJobIDs.contains($0.id) }
+                        user.jobs = Array(selectedJobs)
                         /// update data
                         try? modelContext.save()
                     }
                 }
-            } label:{
+            }label:{
                 HStack {
                     Text("Select Jobs")
                     Spacer()

@@ -10,7 +10,7 @@ import SwiftData
 
 
 @Model
-class Job: Identifiable, Hashable {
+class Job: Identifiable, Hashable, Equatable {
     var id: UUID
     var name: String
     var priority: Int
@@ -21,6 +21,10 @@ class Job: Identifiable, Hashable {
         self.priority = priority
         self.owner = owner
         self.id = id
+    }
+    
+    static func == (lhs: Job, rhs: Job) -> Bool {
+        lhs.id == rhs.id
     }
 }
 

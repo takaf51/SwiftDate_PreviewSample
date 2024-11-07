@@ -64,7 +64,7 @@ struct SampleData: PreviewModifier {
             for: User.self,
             configurations: config
         )
-        SampleData.createSampleData(into: container.mainContext)
+        Self.createSampleData(into: container.mainContext)
         return container
     }
     
