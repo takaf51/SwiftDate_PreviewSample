@@ -60,7 +60,7 @@ struct ContentView: View {
 }
 
 
-#Preview("Traits", traits: .sampleData) {
-    @Previewable  @Query(sort: \User.name, order: .reverse) var users: [User]
+#Preview("PreviewModifier", traits: .sampleData) {
+//    @Previewable  @Query(sort: \User.name, order: .reverse) var users: [User]
     ContentView()
 }
